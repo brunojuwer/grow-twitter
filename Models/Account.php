@@ -2,8 +2,6 @@
 
 namespace Models;
 
-require './Database/Database.php';
-
 use Database\Database;
 
 abstract class Account 
@@ -14,12 +12,12 @@ abstract class Account
 
   private $email;
 
-  private $role = "DEFAULT";
+  private $role;
 
   private $password;
 
 
-  public function __construct($username, $email, $password)
+  public function __construct($username, $email, $password, $role = Roles::USER)
   {
     $this->checkUniqueUsernameOrFail($username);
 
@@ -27,6 +25,7 @@ abstract class Account
     $this->username = "@$username";
     $this->email = $email;
     $this->password = $password;
+    $this->role = $role;
 
     Database::persistAccount($this);
   }

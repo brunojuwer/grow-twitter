@@ -2,19 +2,47 @@
 
 namespace Models;
 
+use Database\Database;
+
 class Tweet 
 {
-    private $id;
+    private string $id;
 
-    private $user;
+    private string $content;
 
-    private $likes;
+    private User $user;
 
-    private $replies;
+    private int $likes = 0;
 
-    private $created_at;
+    private $created_at = date("D M j G:i:s T Y");
 
     private $updated_at;
 
+    private Database $db;
+
+
+    public function __construct(Database $db)
+    {
+        $this->db = $db;
+    }
+
+    public function criarTweet(User $user, string $content): void
+    {
+        $this->user = $user;
+        $this->content = $content;
+
+        $this->db->persist([
+            'user' => $this->user,
+            'content' => $this->content,
+            'likes' => $this->likes,
+            'created_at' => $this->created_at,
+            'updated_at'=> $this->updated_at = null
+        ]);
+    }
+
+    public function getAllTweetes()
+    {
+        $this->db->printAll();
+    }
 
 }

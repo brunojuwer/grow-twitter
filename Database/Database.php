@@ -2,41 +2,34 @@
 
 namespace Database;
 
-use Models\Account;
-
-class Database 
+abstract class Database 
 {
   
-  private static $instance = null;
-
-  private static $users = [];
+  protected $data = [];
   
-  private static $tweets = [];
-
-  private function __construct() {}
-
-  public static function setDatabaseSingleton() {
-    if (is_null(self::$instance)) {
-      self::$instance = new self();
-    }
+  public function persist($value)
+  {
+    $value['id'] = $this->generateID();
+    return array_push($this->data, $value);
   }
 
-  public static function persistAccount(Account $user): void
+  public function retrive(string $id)
   {
-    array_push(self::$users, $user);
-  }
-
-  public static function retriveAccount(string $id): Account
-  {
-    return array_filter(self::$users, function($user) use ($id){
-      return $user->id === $id;
+    return array_filter($this->data, function($value) use ($id){
+      return $value->id === $id;
     })[0];
   }
 
-  public static function printAllAccounts(): void
+  public function generateID()
+  {
+    return uniqid("", true);
+  }
+
+
+  public function printAll(): void
   {
     echo "<pre>";
-      print_r(self::$users);
+      print_r($this->data);
     echo "</pre>";
   }
 }

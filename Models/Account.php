@@ -16,18 +16,25 @@ abstract class Account
 
   private $password;
 
+  protected Database $accountDatabase;
 
-  public function __construct($username, $email, $password, $role = Roles::USER)
+
+  public function __construct(Database $db, $username, $email, $password, $role = Roles::USER)
   {
-    $this->checkUniqueUsernameOrFail($username);
+    $this->accountDatabase = $db;
 
-    $this->id = $this->generateAccountID();
+    $this->checkUniqueUsernameOrFail($username);
     $this->username = "@$username";
     $this->email = $email;
     $this->password = $password;
     $this->role = $role;
 
-    Database::persistAccount($this);
+    $this->accountDatabase->persist([
+      'username' => $this->username,
+      'email' => $this->email,
+      'role' => $this->role,
+      'password' => $this->password
+    ]);
   }
 
 
@@ -41,12 +48,6 @@ abstract class Account
       echo " ROLE: $this->role <br />";
       echo "=================================";
     echo "<pre>";
-  }
-
-
-  private function generateAccountID()
-  {
-    return uniqid("", true);
   }
 
   public function checkUniqueUsernameOrFail($username): void

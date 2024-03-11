@@ -40,17 +40,17 @@ abstract class Account
   public static function list($data): void
   {
     echo "LISTA DE USUÁRIOS";
-      foreach($data as $value)
-      {
-        echo "<pre>";
-          echo "================================= <br />";
-          echo " ID: $value->id <br />";
-          echo " USERNAME: $value->username <br />";
-          echo " EMAIL: $value->email <br />";
-          echo " ROLE: $value->role <br />";
-          echo "=================================";
-        echo "<pre>";
-      }
+    foreach($data as $value)
+    {
+      echo "<pre>";
+        echo "================================= <br />";
+        echo " ID: $value->id <br />";
+        echo " USERNAME: $value->username <br />";
+        echo " EMAIL: $value->email <br />";
+        echo " ROLE: $value->role <br />";
+        echo "=================================";
+      echo "<pre>";
+    }
   }
 
 

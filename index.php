@@ -14,11 +14,14 @@ require_once './Models/User.php';
 require_once './Models/Admin.php';
 require_once './Models/Tweet.php';
 
+// Database inicialization
 $db = new Database([
   'tweets' => [],
   'accounts' => [],
 ]);
 
+
+// Users
 $user1 = new User('brunojuwer', 'bruno@email.com', '123');
 $user2 = new User('carlosjuwer', 'carlos@email.com', '123');
 
@@ -30,14 +33,9 @@ $db->persist('accounts', $user1, $user2, $adm1, $adm2);
 User::list($db->getAll('accounts'));
 
 
-// $user1->printInfo();
-// $user2->printInfo();
-// $adm1->printInfo();
-// $adm2->printInfo();
+// Tweets
+$tweet = new Tweet($user1, "Let's go do some metal music!");
 
+$db->persist('tweets', $tweet);
 
-$tweet = new Tweet($tweetDb);
-
-$tweet->criarTweet($user1, "Let's go do some metal music!");
-
-$tweet->getAllTweetes();
+Tweet::list($db->getAll('tweets'));

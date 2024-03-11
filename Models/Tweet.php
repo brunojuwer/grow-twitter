@@ -2,8 +2,6 @@
 
 namespace Models;
 
-use Database\Database;
-
 class Tweet 
 {
     private string $id;
@@ -18,32 +16,32 @@ class Tweet
 
     private $updated_at;
 
-    private Database $db;
-
-
-    public function __construct(Database $db)
+    public function __construct(User $user, string $content)
     {
-        $this->db = $db;
-    }
-
-    public function criarTweet(User $user, string $content): void
-    {
+        $this->id = $this->generateID();
         $this->user = $user;
         $this->content = $content;
         $this->created_at = date("D M j G:i:s T Y");
-
-        $this->db->persist([
-            'user' => $this->user,
-            'content' => $this->content,
-            'likes' => $this->likes,
-            'created_at' => $this->created_at,
-            'updated_at'=> $this->updated_at = null
-        ]);
     }
 
-    public function getAllTweetes()
+    public static function list($data): void
     {
-        $this->db->printAll();
+        echo "LISTA DE TWEETS";
+        foreach($data as $value)
+        {
+            echo "<pre>";
+            echo "================================= <br />";
+            echo " USERNAME: {$value->user->name}: ";
+            echo "$value->content <br />";
+            echo " LIKES [$value->likes] <br />";
+            echo "=================================";
+            echo "<pre>";
+        }
+    }
+
+    public function generateID()
+    {
+    return uniqid("", true);
     }
 
 }

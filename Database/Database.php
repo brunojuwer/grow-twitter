@@ -2,34 +2,30 @@
 
 namespace Database;
 
-abstract class Database 
+class Database 
 {
   
-  protected $data = [];
+  private $data;
   
-  public function persist($value)
+  public function __construct(array $data)
   {
-    $value['id'] = $this->generateID();
-    return array_push($this->data, $value);
+    $this->data = $data;
   }
 
-  public function retrive(string $id)
+  public function persist(string $table, ...$value)
   {
-    return array_filter($this->data, function($value) use ($id){
+    array_push($this->data[$table], ...$value);
+  }
+
+  public function retrive(string $id, $table)
+  {
+    return array_filter($this->data[$table], function($value) use ($id){
       return $value->id === $id;
     })[0];
   }
 
-  public function generateID()
+  public function getAll($table): array
   {
-    return uniqid("", true);
-  }
-
-
-  public function printAll(): void
-  {
-    echo "<pre>";
-      print_r($this->data);
-    echo "</pre>";
+      return $this->data[$table];
   }
 }

@@ -14,7 +14,7 @@ class Tweet
 
     private int $likes = 0;
 
-    private $created_at = date("D M j G:i:s T Y");
+    private $created_at;
 
     private $updated_at;
 
@@ -30,6 +30,7 @@ class Tweet
     {
         $this->user = $user;
         $this->content = $content;
+        $this->created_at = date("D M j G:i:s T Y");
 
         $this->db->persist([
             'user' => $this->user,

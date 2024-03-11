@@ -2,8 +2,6 @@
 
 namespace Models;
 
-use Database\Database;
-
 abstract class Account 
 {
   private $id;
@@ -16,27 +14,16 @@ abstract class Account
 
   private $password;
 
-  protected Database $accountDatabase;
 
-
-  public function __construct(Database $db, $username, $email, $password, $role = Roles::USER)
+  public function __construct($username, $email, $password, $role = Roles::USER)
   {
-    $this->accountDatabase = $db;
-
+    $this->id = $this->generateID();
     $this->checkUniqueUsernameOrFail($username);
     $this->username = "@$username";
     $this->email = $email;
     $this->password = $password;
     $this->role = $role;
-
-    $this->accountDatabase->persist([
-      'username' => $this->username,
-      'email' => $this->email,
-      'role' => $this->role,
-      'password' => $this->password
-    ]);
   }
-
 
   public function printInfo()
   {
@@ -50,9 +37,30 @@ abstract class Account
     echo "<pre>";
   }
 
+  public static function list($data): void
+  {
+    echo "LISTA DE USUÁRIOS";
+      foreach($data as $value)
+      {
+        echo "<pre>";
+          echo "================================= <br />";
+          echo " ID: $value->id <br />";
+          echo " USERNAME: $value->username <br />";
+          echo " EMAIL: $value->email <br />";
+          echo " ROLE: $value->role <br />";
+          echo "=================================";
+        echo "<pre>";
+      }
+  }
+
+
   public function checkUniqueUsernameOrFail($username): void
   {
 
   }
 
+  public function generateID()
+  {
+    return uniqid("", true);
+  }
 }

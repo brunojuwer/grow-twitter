@@ -53,6 +53,11 @@ abstract class Account
     }
   }
 
+  public function getName(): string
+  {
+    return $this->username;
+  }
+
 
   public function checkUniqueUsernameOrFail($username): void
   {

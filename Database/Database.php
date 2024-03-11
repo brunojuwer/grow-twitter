@@ -17,14 +17,15 @@ class Database
     array_push($this->data[$table], ...$value);
   }
 
-  public function retrive(string $id, $table)
+  public function retrive(string $table, string $id)
   {
-    return array_filter($this->data[$table], function($value) use ($id){
-      return $value->id === $id;
-    })[0];
+   $value = array_filter($this->data[$table], function($value) use ($id){
+      return $value->getId() === $id;
+    });
+    return [...$value][0];
   }
 
-  public function getAll($table): array
+  public function getAll(string $table): array
   {
       return $this->data[$table];
   }

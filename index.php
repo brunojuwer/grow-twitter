@@ -5,6 +5,7 @@ use Models\User;
 use Models\Tweet;
 use Database\Database;
 use Models\Like;
+use Models\Reply;
 
 require_once './Utils/functions.php';
 require_once './Database/Database.php';
@@ -13,7 +14,9 @@ require_once './Models/User.php';
 require_once './Models/Admin.php';
 require_once './Models/Tweet.php';
 require_once './Models/Like.php';
+require_once './Models/Reply.php';
 
+echo '<pre>';
 echo "<h1>Grow Twitter</h1>";
 
 // Database inicialization
@@ -87,6 +90,16 @@ $tweet1->giveLike($like5);
 $tweet3->giveLike($like4);
 $tweet5->giveLike($like6);
 $tweet5->giveLike($like7);
+
+
+// Comentários
+$reply1 = new Reply("Let's GOOOOO!", $tweet->getId(), $user3->getName());
+$reply2 = new Reply("That's because he is the GOAT!", $tweet->getId(), $user6->getName());
+$reply3 = new Reply("Me too!", $tweet5->getId(), $user1->getName());
+
+$tweet->reply($reply1);
+$tweet->reply($reply2);
+$tweet5->reply($reply3);
 
 
 // Listagem detalhada dos Tweets

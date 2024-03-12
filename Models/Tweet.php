@@ -11,6 +11,8 @@ class Tweet
     private User $user;
 
     private array $likes;
+    
+    private array $replies;
 
     private $created_at;
 
@@ -27,6 +29,7 @@ class Tweet
         $this->content = $content;
         $this->created_at = date("D M j G:i:s T Y");
         $this->likes = [];
+        $this->replies = [];
     }
     
     public function getId(): string
@@ -48,6 +51,16 @@ class Tweet
     {
         $this->verifyUserStatus('like');
         array_push($this->likes, $like);
+    }
+
+    public function reply($reply): void
+    {
+        array_push($this->replies, $reply);
+    }
+
+    public function getReplies(): array
+    {
+        return $this->replies;
     }
 
     private function verifyUserStatus($action): void
@@ -74,6 +87,7 @@ class Tweet
         echo "{$data->user->getName()}: ";
         echo "$data->content <br />";
         echo self::showLikes($data);
+        echo self::showReplies($data);
         echo "=================================";
         echo "</pre>";
     }
@@ -92,9 +106,20 @@ class Tweet
             . count($data->getLikes() ) - 1 . " user liked this] <br />";
     }
 
+    private static function showReplies($data): string
+    {
+        if(count($data->getReplies()) <= 0) {
+            return  "[0 replies] <br />";
+        }
+
+        return array_reduce($data->getReplies(), function($carry, $reply){
+            return $carry .= " > {$reply->getUsername()}: {$reply->getContent()} <br />";
+        }, "");
+    }
+
     public function generateID()
     {
-    return uniqid("", true);
+        return uniqid("", true);
     }
 
 }

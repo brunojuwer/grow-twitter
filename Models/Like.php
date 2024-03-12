@@ -4,21 +4,31 @@ namespace Models;
 
 class Like 
 {
-  private $comment;
-  private User $user;
-  private Tweet $tweet;
 
-  public function __construct($comment, User $user, Tweet $tweet)
+  public function __construct(
+    private string $userName,
+    private string $userId,
+    private string $tweetId,
+  )
   {
-    $this->comment = $comment;
-    $this->user = $user;
-    $this->tweet = $tweet;
+    $this->userId = $userId;
+    $this->userName = $userName;
+    $this->tweetId = $tweetId;
+  }
+  
+  public function getUserId()
+  {
+    return $this->userId;
   }
 
-  
-  public function like()
+  public function getUsername()
   {
-    $this->tweet->giveLike($this);
+    return $this->userName;
+  }
+
+  public function getTweetId()
+  {
+    return $this->tweetId;
   }
 
 }

@@ -40,31 +40,29 @@ class Tweet
         return $this->likes;
     }
 
-    public static function list($data): void
-    {
-        echo "LISTA DE TWEETS";
-        foreach($data as $value)
-        {
-            echo "<pre>";
-            echo "================================= <br />";
-            echo "{$value->user->getName()}: ";
-            echo "$value->content <br />";
-            echo " LIKES [$value->likes] <br />";
-            echo "=================================";
-            echo "<pre>";
-        }
-    }
-
     public static function show($data): void
     {
-        echo "TWEET DETALHADO";
         echo "<pre>";
         echo "================================= <br />";
         echo "{$data->user->getName()}: ";
         echo "$data->content <br />";
-        echo count($data->getLikes()) > 0 ? "LIKES [{$data->getLikes()}] <br />" : "";
+        echo self::showLikes($data);
         echo "=================================";
         echo "<pre>";
+    }
+
+    private static function showLikes($data): string
+    {
+        if(count($data->getLikes()) === 0) {
+            return  "[" . count($data->getLikes()) . " likes] <br />";
+        }
+
+        if(count($data->getLikes()) === 1) {
+            return  "[" . $data->getlikes()[0]->getUsername() . " liked this] <br />";
+        }
+
+        return "[" . $data->getlikes()[count($data->getlikes()) - 1]->getUsername() . " and other " 
+            . count($data->getLikes()) . " user liked this] <br />";
     }
 
     public function generateID()

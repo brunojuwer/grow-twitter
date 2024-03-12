@@ -18,7 +18,6 @@ abstract class Account
   public function __construct($username, $email, $password, $role = Roles::USER)
   {
     $this->id = $this->generateID();
-    $this->checkUniqueUsernameOrFail($username);
     $this->username = "@$username";
     $this->email = $email;
     $this->password = $password;
@@ -53,15 +52,19 @@ abstract class Account
     }
   }
 
+  public function getEmail(): string
+  {
+    return $this->email;
+  }
+
   public function getName(): string
   {
     return $this->username;
   }
 
-
-  public function checkUniqueUsernameOrFail($username): void
+  public function getId(): string
   {
-
+    return $this->id;
   }
 
   public function generateID()

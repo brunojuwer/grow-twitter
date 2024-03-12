@@ -31,7 +31,7 @@ class User extends Account
   public static function showFeed($userId, $following, $tweets): void
   {
     $myTweets = self::getOwnTweets($userId, $tweets);
-    $followwingTweets = self::getFollowingTweets($tweets, $following);
+    $followwingTweets = self::getTweetsOfFollowUsers($tweets, $following);
     
     $tweetsToShow = array_merge($myTweets, $followwingTweets);
 
@@ -47,7 +47,7 @@ class User extends Account
     });
   }
 
-  private static function getFollowingTweets($tweets, $following): array
+  private static function getTweetsOfFollowUsers($tweets, $following): array
   {
     return array_reduce($following, function($carry, $follow) use ($tweets) {
         $filtered = array_filter($tweets, function($tweet) use ($follow) {

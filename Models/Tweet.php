@@ -18,8 +18,12 @@ class Tweet
 
     public function __construct(User $user, string $content)
     {
+        
         $this->id = $this->generateID();
         $this->user = $user;
+
+        $this->verifyUserStatus('tweet');
+
         $this->content = $content;
         $this->created_at = date("D M j G:i:s T Y");
         $this->likes = [];
@@ -42,7 +46,16 @@ class Tweet
 
     public function giveLike($like): void
     {
+        $this->verifyUserStatus('like');
         array_push($this->likes, $like);
+    }
+
+    private function verifyUserStatus($action): void
+    {
+        if(!$this->user->isActive()){
+            echo "User {$this->user->getName()} is blocked and cannot $action!";
+            die();
+        }
     }
 
     public static function show($data): void

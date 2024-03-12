@@ -22,6 +22,11 @@ class User extends Account
       die();
     }
 
+    if(!$this->isActive()){
+      echo "User {$this->getName()} is blocked and cannot like!";
+      die();
+    }
+
     array_push($this->following, [
       'id' => $user->getId(),
       'username' => $user->getName()

@@ -10,4 +10,9 @@ class Admin extends Account
   {
     parent::__construct($username, $email, $password, Roles::ADMIN);
   }
+
+  public function blockUser(User $user): void
+  {
+    $user->deactivate();
+  }
 }

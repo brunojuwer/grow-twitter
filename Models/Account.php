@@ -14,6 +14,8 @@ abstract class Account
 
   protected $password;
 
+  protected $ative = true;
+
 
   public function __construct($username, $email, $password, $role = Roles::USER)
   {
@@ -22,6 +24,31 @@ abstract class Account
     $this->email = $email;
     $this->password = $password;
     $this->role = $role;
+  }
+
+  public function getId(): string
+  {
+    return $this->id;
+  }
+
+  public function getName(): string
+  {
+    return $this->username;
+  }
+
+  public function getEmail(): string
+  {
+    return $this->email;
+  }
+
+  public function deactivate(): void
+  {
+    $this->ative = false;
+  }
+
+  public function isActive(): bool
+  {
+    return $this->ative;
   }
 
   public function printInfo()
@@ -50,21 +77,6 @@ abstract class Account
         echo "=================================";
       echo "<pre>";
     }
-  }
-
-  public function getEmail(): string
-  {
-    return $this->email;
-  }
-
-  public function getName(): string
-  {
-    return $this->username;
-  }
-
-  public function getId(): string
-  {
-    return $this->id;
   }
 
   public function generateID()

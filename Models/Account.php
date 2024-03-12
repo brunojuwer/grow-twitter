@@ -4,15 +4,15 @@ namespace Models;
 
 abstract class Account 
 {
-  private $id;
+  protected $id;
 
-  private $username;
+  protected $username;
 
-  private $email;
+  protected $email;
 
-  private $role;
+  protected $role;
 
-  private $password;
+  protected $password;
 
 
   public function __construct($username, $email, $password, $role = Roles::USER)

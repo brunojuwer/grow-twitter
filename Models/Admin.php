@@ -2,6 +2,8 @@
 
 namespace Models;
 
+require_once './Models/Account.php';
+
 class Admin extends Account
 {
   public function __construct($username, $email, $password)

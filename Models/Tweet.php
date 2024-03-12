@@ -24,20 +24,25 @@ class Tweet
         $this->created_at = date("D M j G:i:s T Y");
         $this->likes = [];
     }
-
-    public function giveLike($like): void
-    {
-        array_push($this->likes, $like);
-    }
-
+    
     public function getId(): string
     {
         return $this->id;
     }
 
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+    
     public function getLikes(): array
     {
         return $this->likes;
+    }
+
+    public function giveLike($like): void
+    {
+        array_push($this->likes, $like);
     }
 
     public static function show($data): void

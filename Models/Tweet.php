@@ -58,6 +58,15 @@ class Tweet
         }
     }
 
+
+    public static function listAll($tweets): void
+    {
+        foreach($tweets as $tweet)
+        {
+            self::show($tweet);
+        }
+    }
+
     public static function show($data): void
     {
         echo "<pre>";
@@ -66,7 +75,7 @@ class Tweet
         echo "$data->content <br />";
         echo self::showLikes($data);
         echo "=================================";
-        echo "<pre>";
+        echo "</pre>";
     }
 
     private static function showLikes($data): string
@@ -80,7 +89,7 @@ class Tweet
         }
 
         return "[" . $data->getlikes()[count($data->getlikes()) - 1]->getUsername() . " and other " 
-            . count($data->getLikes()) . " user liked this] <br />";
+            . count($data->getLikes() ) - 1 . " user liked this] <br />";
     }
 
     public function generateID()
